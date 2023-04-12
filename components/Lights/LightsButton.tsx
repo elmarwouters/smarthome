@@ -17,7 +17,7 @@ const LightsButton = ({id}: { id: string }) => {
         })
     });
 
-    const turnLightOnOrOff = async (id: string, onOff: boolean) => {
+    const turnLightOnOrOff = async (id: string, onOff: boolean, hue?: number, sat?: number, bri?: number ) => {
         const url = `http://${process.env.NEXT_PUBLIC_HUE_IP}/api/${process.env.NEXT_PUBLIC_HUE_USER}/lights/${id}/state`;
 
         setLightLoading(true);
@@ -25,6 +25,9 @@ const LightsButton = ({id}: { id: string }) => {
         try {
             await axios.put(url, {
                 on: onOff,
+                ...(hue && { hue }),
+                ...(sat && { sat }),
+                ...(bri && { bri }),
             });
 
             const lightState = await checkLightState(id);
@@ -58,10 +61,13 @@ const LightsButton = ({id}: { id: string }) => {
     return (
         <>
             {!lightLoading && (
+                <>
                 <button
                     className={`p-4 rounded-full ${lightState ? `bg-green-500` : `bg-red-700`}`}
                     onClick={() => turnLightOnOrOff(id, !lightState ? true : false)}
-                />
+                />&nbsp;
+                <button className="p-4 rounded-full bg-red-400" onClick={() => turnLightOnOrOff(id, true, 1, 150, 175)}>RED</button>
+                </>
             )}
         </>
     )

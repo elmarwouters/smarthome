@@ -3,6 +3,8 @@
 import React, {useState, useEffect} from 'react';
 import LightsButton from "./LightsButton";
 
+import {SiPhilipshue} from "react-icons/si";
+
 // Define a type for the light data
 type LightData = {
     state: {
@@ -65,7 +67,7 @@ const Lights = () => {
     useEffect(() => {
         const fetchLightsData = async () => {
             try {
-                const response = await fetch('/lights');
+                const response = await fetch('/api/hue');
                 const data = await response.json();
                 setLightsData(data);
             } catch (error) {
@@ -78,7 +80,10 @@ const Lights = () => {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-4">Philips Hue</h2>
+            <div className="flex justify-between items-center mb-4">
+                <h2 className="text-2xl font-bold self-start">Philips Hue Lights</h2>
+                <span className="text-4xl self-end"><SiPhilipshue/></span>
+            </div>
             <div className="rounded-t-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-100 p-10 w-full">
                 <div className="grid">
                     <div className="grid grid-cols-4 gap-4">
@@ -102,7 +107,7 @@ const Lights = () => {
                             );
                         })
                     ) : (
-                        <p>Loading lights data...</p>
+                        <p>Loading Philips Hue lights data...</p>
                     )}
                 </div>
             </div>
