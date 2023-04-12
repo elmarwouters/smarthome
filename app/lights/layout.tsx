@@ -1,8 +1,6 @@
-import './globals.css'
-
 export const metadata = {
-  title: 'Smart Home',
-  description: 'Made awesome by Elmar Wouters',
+  title: 'Smart Home - Lights',
+  description: 'Control your lights from anywhere',
 }
 
 export default function RootLayout({
