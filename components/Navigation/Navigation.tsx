@@ -12,6 +12,7 @@ const Navigation = () => {
                     <nav>
                         <ul className="flex flex-row gap-4">
                             <li ><a href="/">Home</a></li>
+                            <li ><a href="/groups">Groups</a></li>
                             <li ><a href="/lights">Lights</a></li>
                         </ul>
                     </nav>

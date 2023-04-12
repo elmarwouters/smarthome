@@ -5,8 +5,8 @@ import LightsButton from "./LightsButton";
 
 import {SiPhilipshue} from "react-icons/si";
 
-// Define a type for the light data
-type LightData = {
+// Define a type for the group data
+type GroupData = {
     state: {
         on: boolean;
         bri: number;
@@ -61,21 +61,21 @@ type LightData = {
     productid: string;
 };
 
-const Lights = () => {
-    const [lightsData, setLightsData] = useState<Record<string, LightData> | null>(null);
+const Groups = () => {
+    const [groupsData, setGroupsData] = useState<Record<string, GroupData> | null>(null);
 
     useEffect(() => {
-        const fetchLightsData = async () => {
+        const fetchGroupsData = async () => {
             try {
                 const response = await fetch('/api/hue');
                 const data = await response.json();
-                setLightsData(data.lights);
+                setGroupsData(data.groups);
             } catch (error) {
                 console.error(error);
             }
         };
 
-        fetchLightsData().then();
+        fetchGroupsData().then();
     }, []);
 
     return (
@@ -86,28 +86,24 @@ const Lights = () => {
             </div>
             <div className="rounded-t-xl overflow-hidden bg-gradient-to-r from-emerald-50 to-teal-100 p-10 w-full">
                 <div className="grid">
-                    <div className="grid grid-cols-4 gap-4">
+                    <div className="grid grid-cols-3 gap-4">
                         <div><strong>ID</strong></div>
                         <div><strong>Name</strong></div>
                         <div><strong>Type</strong></div>
-                        <div><strong>On/Off</strong></div>
                     </div>
-                    {lightsData ? (
-                        Object.keys(lightsData).map(lightId => {
-                            const light = lightsData[lightId];
+                    {groupsData ? (
+                        Object.keys(groupsData).map(groupId => {
+                            const group = groupsData[groupId];
                             return (
-                                <div className="grid grid-cols-4 gap-4 my-4" key={lightId}>
-                                    <div>{lightId}</div>
-                                    <div>{light.name}</div>
-                                    <div>{light.type}</div>
-                                    <div className="h-1 w-1 flex">
-                                        <LightsButton id={lightId}/>
-                                    </div>
+                                <div className="grid grid-cols-3 gap-4 my-4" key={groupId}>
+                                    <div>{groupId}</div>
+                                    <div>{group.name}</div>
+                                    <div>{group.type}</div>
                                 </div>
                             );
                         })
                     ) : (
-                        <p>Loading Philips Hue lights data...</p>
+                        <p>Loading Philips Hue groups data...</p>
                     )}
                 </div>
             </div>
@@ -115,4 +111,4 @@ const Lights = () => {
     );
 };
 
-export default Lights;
+export default Groups;
